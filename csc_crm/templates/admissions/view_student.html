@@ -1,0 +1,364 @@
+{% extends 'admissions/base.html' %}
+{% load static %}
+{% block title %}
+<title>View Student</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admissions_css/view_student.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+
+{% block content %}
+<div class="edit-container">
+
+    <!-- ================= PAGE HEADER: BREADCRUMB + ACTIONS ================= -->
+
+    <div class="page-header-row">
+
+        <div class="breadcrumb">
+            <span class="crumb-current">Student Module</span>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span class="crumb-page">Student View</span>
+        </div>
+
+        <div class="header-actions">
+
+            <a href="{% url 'student_list' %}" class="btn-outline">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to List
+            </a>
+
+            <a href="{% url 'edit_student' student.id %}" class="btn-gold">
+                <i class="fa-solid fa-pen"></i>
+                Edit Student
+            </a>
+
+            <div style="position:relative;">
+    <button type="button" class="btn-icon-only" id="moreOptionsBtn" aria-label="More options">
+        <i class="fa-solid fa-ellipsis"></i>
+    </button>
+    <div id="moreOptionsMenu" style="display:none; position:absolute; right:0; top:110%; background:#fff; border:1px solid #e0e3ec; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); min-width:170px; z-index:20;">
+        <a href="{% url 'generate_receipt' student.payments.last.id %}" style="display:block; padding:10px 14px; font-size:13px; color:#17182b;">
+            <i class="fa-solid fa-download"></i> Download Receipt
+        </a>
+        <a href="{% url 'edit_student' student.id %}" style="display:block; padding:10px 14px; font-size:13px; color:#17182b;">
+            <i class="fa-solid fa-pen"></i> Edit Student
+        </a>
+        <a href="{% url 'delete_student' student.id %}" style="display:block; padding:10px 14px; font-size:13px; color:#dc2626;" onclick="return confirm('Delete this student permanently?')">
+            <i class="fa-solid fa-trash"></i> Delete Student
+        </a>
+    </div>
+</div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= PROFILE CARD ================= -->
+
+    <div class="user-card">
+
+        <div class="user-block">
+
+            <div class="user">
+                {% if student.photo %}
+                <img src="{{ student.photo.url }}" alt="Student photo">
+                {% else %}
+                <span>{{ student.first_name|first }}{{ student.last_name|first }}</span>
+                {% endif %}
+            </div>
+
+            <div class="user-left">
+                <h4>
+                    {{ student.first_name }} {{ student.last_name }}
+
+                    {% if admission.status|lower == "enquiry" %}
+                    <span class="dropped">Inactive student</span>
+                    {% elif admission.status|lower == "confirmed" %}
+                    <span class="enrolled">Active student</span>
+                    {% elif admission.status|lower == "enrolled" %}
+                    <span class="enrolled">Active student</span>
+                    {% elif admission.status|lower == "dropped" %}
+                    <span class="dropped">Inactive student</span>
+                    {% else %}
+                    <span class="unknown">Unknown</span>
+                    {% endif %}
+                </h4>
+
+                <p><i class="fa-regular fa-envelope"></i> {{ student.email }}</p>
+                <p><i class="fa-solid fa-phone"></i> {{ student.phone_no }}</p>
+            </div>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="user-middle">
+            <p>
+                <i class="fa-solid fa-user"></i>
+                <span class="info-stack">
+                    <span class="info-label">Gender</span>
+                    <span class="info-value">{{ student.gender }}</span>
+                </span>
+            </p>
+            <p>
+                <i class="fa-regular fa-calendar"></i>
+                <span class="info-stack">
+                    <span class="info-label">Admission Date</span>
+                    <span class="info-value">{{ enrollment.start_date }}</span>
+                </span>
+            </p>
+            <p>
+                <i class="fa-solid fa-users"></i>
+                <span class="info-stack">
+                    <span class="info-label">Batch</span>
+                    <span class="info-value">{{ enrollment.batch }}</span>
+                </span>
+            </p>
+            <p>
+                <i class="fa-regular fa-circle"></i>
+                <span class="info-stack">
+                    <span class="info-label">Status</span>
+                    <span class="info-value">
+                        {% if admission.status|lower == "enquiry" %}
+                        <span class="enquiry">Enquiry</span>
+                        {% elif admission.status|lower == "confirmed" %}
+                        <span class="confirmed">Confirmed</span>
+                        {% elif admission.status|lower == "enrolled" %}
+                        <span class="enrolled">Enrolled</span>
+                        {% elif admission.status|lower == "dropped" %}
+                        <span class="dropped">Dropped</span>
+                        {% else %}
+                        <span class="unknown">Unknown</span>
+                        {% endif %}
+                    </span>
+                </span>
+            </p>
+        </div>
+
+        <div class="user-middle">
+            <p>
+                <i class="fas fa-user-shield"></i>
+                <span class="info-stack">
+                    <span class="info-label">Guardian Name</span>
+                    <span class="info-value">{{ student.guardian_name }}</span>
+                </span>
+            </p>
+            <p>
+                <i class="fa-solid fa-phone"></i>
+                <span class="info-stack">
+                    <span class="info-label">Guardian Phone</span>
+                    <span class="info-value">{{ student.guardian_phone_no }}</span>
+                </span>
+            </p>
+            <p>
+                <i class="fa-regular fa-calendar"></i>
+                <span class="info-stack">
+                    <span class="info-label">Date of Birth</span>
+                    <span class="info-value">{{ student.dob }}</span>
+                </span>
+            </p>
+        </div>
+
+        <div class="user-right">
+            <h4><i class="fa-solid fa-location-dot"></i> Address</h4>
+            <p>{{ student.address }}</p>
+        </div>
+
+    </div>
+
+    <!-- ================= STATS ================= -->
+
+    <div class="stats">
+        <div class="box total">
+            <div class="fees-icon1"><i class="fa-solid fa-wallet"></i></div>
+            <div class="text"><span>Total Fee</span><br>₹{{ student.total_fee }}</div>
+        </div>
+        <div class="box paid">
+            <div class="fees-icon2"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="text"><span>Paid</span><br>₹{{ student.total_paid }}</div>
+        </div>
+        <div class="box pending">
+            <div class="fees-icon3"><i class="fa-solid fa-clock"></i></div>
+            <div class="text"><span>Pending</span><br>₹{{ student.pending_amount }}</div>
+        </div>
+        <div class="box trans">
+            <div class="fees-icon4"><i class="fas fa-file-alt"></i></div>
+            <div class="text"><span>Transactions</span><br>{{ payments.count }}</div>
+        </div>
+    </div>
+
+    <!-- ================= PAYMENT HISTORY ================= -->
+
+    <div class="card">
+
+        <div class="card-header-row">
+            <h4><i class="fas fa-file-alt icon-blue"></i> Payment History</h4>
+           <a href="{% url 'view_student' student.id %}?show=payments" class="btn-view-all" style="text-decoration:none; display:inline-block;">View All</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Amount</th>
+                        <th>Mode</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in payments %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>₹{{ p.amount }}</td>
+                        <td>{{ p.mode }}</td>
+                        <td>{{ p.date }}</td>
+                        <td>
+                            {% if p.status == "SUCCESS" %}
+                            <span class="success">Success</span>
+                            {% elif p.status == "PENDING" %}
+                            <span class="pending-badge">Pending</span>
+                            {% else %}
+                            <span class="failed">Failed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <i class="fa-regular fa-envelope-open"></i>
+                                <p>No payments found.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ================= NOTES + DOCUMENTS ================= -->
+
+    <div class="bottom">
+
+        <div class="card notes">
+            <div class="card-header-row">
+                <h4><i class="fas fa-file-alt icon-orange"></i> Notes</h4>
+            </div>
+            <div class="notes-list">
+    {% for note in notes %}
+    <p>{{ note.content|linebreaksbr }}</p>
+    <small style="display:block; color:#9096b4; margin-top:6px;">
+        Added by {{ note.added_by }} — {{ note.created_at|date:"F d, Y, g:i A" }}
+    </small>
+    {% empty %}
+    <p style="color:#9096b4;">No notes added yet.</p>
+    {% endfor %}
+</div>
+        </div>
+
+        <div class="card docs">
+
+            <div class="card-header-row">
+                <h4><i class="fa-solid fa-folder-open"></i> Documents</h4>
+               <a href="{% url 'view_student' student.id %}?show=docs" class="btn-view-all" style="text-decoration:none; display:inline-block;">View All</a>
+            </div>
+
+            <div class="doc-list">
+
+                <!-- ID Proof -->
+                <div class="proof">
+                    <div class="icon">
+                        <i class="fa-regular fa-file-pdf"></i>
+                    </div>
+                    <div class="proof-text">
+                        {% if student.id_proof %}
+                        <a href="{{ student.id_proof.url }}" target="_blank">
+                            <strong>ID Proof</strong>
+                            <small>Aadhar Card</small>
+                        </a>
+                        {% else %}
+                        <strong>No File</strong>
+                        <small>PDF</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Address Proof -->
+                <div class="proof">
+                    <div class="icon">
+                        <i class="fa-regular fa-file-pdf"></i>
+                    </div>
+                    <div class="proof-text">
+                        {% if student.certificate %}
+                        <a href="{{ student.certificate.url }}" target="_blank">
+                            <strong>Address Proof</strong>
+                            <small>Electricity Bill</small>
+                        </a>
+                        {% else %}
+                        <strong>No File</strong>
+                        <small>PDF</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Photo -->
+                <div class="proof">
+                    <div class="icon">
+                        <i class="fa-regular fa-file-pdf"></i>
+                    </div>
+                    <div class="proof-text">
+                        {% if student.photo %}
+                        <a href="{{ student.photo.url }}" target="_blank">
+                            <strong>Photo</strong>
+                            <small>Passport Size</small>
+                        </a>
+                        {% else %}
+                        <strong>No Photo</strong>
+                        <small>PDF</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Admission Form -->
+                <div class="proof">
+                    <div class="icon">
+                        <i class="fa-regular fa-file-pdf"></i>
+                    </div>
+                    <div class="proof-text">
+                        {% if student.admission_form %}
+                        <a href="{{ student.admission_form.url }}" target="_blank">
+                            <strong>Admission Form</strong>
+                            <small>admission_form.pdf</small>
+                        </a>
+                        {% else %}
+                        <strong>Not Uploaded</strong>
+                        <small>PDF</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+document.getElementById('moreOptionsBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    const menu = document.getElementById('moreOptionsMenu');
+    menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+});
+document.addEventListener('click', function(){
+    document.getElementById('moreOptionsMenu').style.display = 'none';
+});
+</script>
+
+{% endblock %}

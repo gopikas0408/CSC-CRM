@@ -1,0 +1,633 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: static;
+}
+
+.edit-container {
+    width: 98%;
+    margin: 15px auto 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* =========================================================
+   PAGE HEADER: BREADCRUMB + ACTION BUTTONS
+========================================================= */
+
+.page-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+}
+
+.breadcrumb i {
+    font-size: 11px;
+    color: #9aa0b4;
+}
+
+.crumb-current {
+    font-weight: bold;
+    color: rgb(30, 42, 120);
+}
+
+.crumb-page {
+    color: #6b7280;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-outline,
+.btn-gold,
+.btn-icon-only {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #e0e3ec;
+    cursor: pointer;
+    background: #ffffff;
+    color: rgb(30, 42, 120);
+}
+
+.btn-outline:hover {
+    background: #f4f5f9;
+}
+
+.btn-gold {
+    background: rgb(255, 202, 43);
+    border-color: rgb(255, 202, 43);
+    color: rgb(30, 42, 120);
+}
+
+.btn-gold:hover {
+    box-shadow: 0 4px 10px rgba(255, 202, 43, 0.5);
+}
+
+.btn-icon-only {
+    padding: 9px 12px;
+}
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 14px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(30, 42, 120, 0.06);
+}
+
+.user-card {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(30, 42, 120, 0.06);
+}
+
+.user-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1.4;
+    min-width: 260px;
+}
+
+.user {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 50%;
+    background: #e7e6fb;
+    color: rgb(75, 70, 190);
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.enquiry {
+    color: #d97706;
+    background-color: #fef3c7;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.confirmed {
+    color: #2563eb;
+    background-color: #dbeafe;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.enrolled {
+    color: #16a34a;
+    background-color: #d4f5e9;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.dropped {
+    color: #dc2626;
+    background-color: #fee2e2;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.unknown {
+    color: #6b7280;
+    background-color: #f1f2f5;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.user-left h4 {
+    font-size: 17px;
+    color: #17182b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.user-left p {
+    margin: 6px 0;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+.user-left i {
+    width: 16px;
+    color: rgb(30, 42, 120);
+}
+
+.line {
+    width: 1px;
+    align-self: stretch;
+    background: #e5e7eb;
+}
+
+.user-middle,
+.user-right {
+    flex: 1;
+    min-width: 180px;
+}
+
+.user-middle p {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.user-middle i {
+    color: rgb(75, 70, 190);
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.info-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 11px;
+    color: #9096b4;
+    margin-bottom: 2px;
+}
+
+.info-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #17182b;
+}
+
+.user-right {
+    border: 1px solid #e5e7eb;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.user-right h4 {
+    font-size: 13px;
+    color: rgb(30, 42, 120);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-right p {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.box {
+    flex: 1;
+    min-width: 200px;
+    padding: 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+}
+
+.text span {
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.total {
+    background: #eceaff;
+    color: rgb(30, 42, 120);
+}
+
+.paid {
+    background: #e0f7e9;
+    color: #16a34a;
+}
+
+.pending {
+    background: #fde3e3;
+    color: #dc2626;
+}
+
+.trans {
+    background: #e5edff;
+    color: #2563eb;
+}
+
+.fees-icon1,
+.fees-icon2,
+.fees-icon3,
+.fees-icon4 {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    font-size: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fees-icon1 {
+    background: rgb(30, 42, 120);
+    color: #ffffff;
+}
+
+.fees-icon2 {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.fees-icon3 {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.fees-icon4 {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* =========================================================
+   SECTION CARD HEADERS
+========================================================= */
+
+.card-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.card-header-row h4 {
+    font-size: 15px;
+    color: #17182b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-blue {
+    color: #2563eb;
+}
+
+.icon-orange {
+    color: #d97706;
+}
+
+.btn-view-all {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid #e0e3ec;
+    background: #ffffff;
+    color: rgb(30, 42, 120);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-view-all:hover {
+    background: #f4f5f9;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+    font-size: 13px;
+    color: #17182b;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #f1f2f5;
+    font-size: 13px;
+    color: #374151;
+}
+
+.success {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.pending-badge {
+    color: #d97706;
+    font-weight: 600;
+}
+
+.failed {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px 0;
+    color: #9096b4;
+}
+
+.empty-state i {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+    color: #c7cadb;
+}
+
+/* =========================================================
+   BOTTOM: NOTES + DOCUMENTS
+========================================================= */
+
+.bottom {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.notes {
+    flex: 1;
+    min-width: 260px;
+}
+
+.notes-list {
+    padding: 14px;
+    background: #fff7d6;
+    border-radius: 10px;
+}
+
+.notes-list p {
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.docs {
+    flex: 2;
+    min-width: 320px;
+}
+
+.doc-list {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.proof {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 12px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 130px;
+}
+
+.proof .icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    background-color: #fee2e2;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.proof .icon i {
+    font-size: 16px;
+    color: #dc2626;
+}
+
+.proof-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.proof-text strong {
+    color: #17182b;
+    font-size: 12px;
+}
+
+.proof-text small {
+    color: #9096b4;
+    font-size: 11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 550px) {
+
+    body {
+        margin-top: 15px;
+    }
+
+    .page-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-card {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .user-block {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .user img {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    .user {
+        width: 90px;
+        height: 90px;
+        font-size: 26px;
+        margin: 0 auto;
+    }
+
+    .line {
+        display: none;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .box {
+        width: 100%;
+    }
+
+    .card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 500px;
+    }
+
+    .bottom {
+        flex-direction: column;
+    }
+
+    .doc-list {
+        flex-direction: column;
+    }
+
+    .proof {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+        height: 2px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+        background: #e5e5e5;
+        border-radius: 10px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: rgb(255, 202, 43);
+        border-radius: 10px;
+    }
+
+    p,
+    td,
+    th,
+    a,
+    span {
+        font-size: 13px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
