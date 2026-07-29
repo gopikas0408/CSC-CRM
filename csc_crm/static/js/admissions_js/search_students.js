@@ -227,3 +227,36 @@ document.getElementById("resetBtn").addEventListener("click", function () {
             window.location.search = params.toString();
         });
     }
+
+    function toggleKebabMenu(btn) {
+    const menu = btn.parentElement.querySelector(".kebab-menu");
+    const allMenus = document.querySelectorAll(".kebab-menu");
+
+    allMenus.forEach(m => {
+        if (m !== menu) m.classList.remove("show");
+    });
+
+    menu.classList.toggle("show");
+}
+
+// close menu when clicking outside
+document.addEventListener("click", function (e) {
+    if (!e.target.closest(".kebab-wrapper")) {
+        document.querySelectorAll(".kebab-menu").forEach(m => m.classList.remove("show"));
+    }
+});
+
+// delete confirmation
+document.addEventListener("click", function (e) {
+    const link = e.target.closest(".delete-link");
+    if (!link) return;
+
+    e.preventDefault();
+
+    const url = link.dataset.url;
+    const name = link.dataset.name;
+
+    if (confirm(`Delete student "${name}"? This action cannot be undone.`)) {
+        window.location.href = url;
+    }
+});

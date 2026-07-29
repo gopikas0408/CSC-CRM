@@ -443,3 +443,47 @@ a {
         border-radius: 10px;
     }
 }
+
+.kebab-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.kebab-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    min-width: 130px;
+    z-index: 20;
+    overflow: hidden;
+}
+
+.kebab-menu.show {
+    display: block;
+}
+
+.kebab-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 13.5px;
+    color: #333;
+    text-decoration: none;
+}
+
+.kebab-menu a:hover {
+    background: #f3f4f6;
+}
+
+.kebab-menu a.delete-link {
+    color: #dc2626;
+}
+
+.kebab-menu a.delete-link:hover {
+    background: #fee2e2;
+}
