@@ -228,35 +228,117 @@ document.getElementById("resetBtn").addEventListener("click", function () {
         });
     }
 
-    function toggleKebabMenu(btn) {
-    const menu = btn.parentElement.querySelector(".kebab-menu");
-    const allMenus = document.querySelectorAll(".kebab-menu");
+    // ================= BULK SELECTION =================
+const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+const exportExcelBtn = document.getElementById('exportExcelBtn');
+const selectedCountText = document.getElementById('selectedCountText');
 
-    allMenus.forEach(m => {
-        if (m !== menu) m.classList.remove("show");
-    });
-
-    menu.classList.toggle("show");
+function getRowCheckboxes() {
+    return document.querySelectorAll('.row-checkbox');
 }
 
-// close menu when clicking outside
-document.addEventListener("click", function (e) {
-    if (!e.target.closest(".kebab-wrapper")) {
-        document.querySelectorAll(".kebab-menu").forEach(m => m.classList.remove("show"));
+function getSelectedIds() {
+    return Array.from(getRowCheckboxes())
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+}
+
+function updateSelectionUI() {
+    const rowCheckboxes = getRowCheckboxes();
+    const selectedIds = getSelectedIds();
+
+    if (selectAllCheckbox) {
+        if (rowCheckboxes.length === 0 || selectedIds.length === 0) {
+            selectAllCheckbox.checked = false;
+            selectAllCheckbox.indeterminate = false;
+        } else if (selectedIds.length === rowCheckboxes.length) {
+            selectAllCheckbox.checked = true;
+            selectAllCheckbox.indeterminate = false;
+        } else {
+            selectAllCheckbox.checked = false;
+            selectAllCheckbox.indeterminate = true;
+        }
+    }
+
+    if (selectedCountText) {
+        if (selectedIds.length > 0) {
+            selectedCountText.style.display = 'block';
+            selectedCountText.innerText = selectedIds.length === 1
+                ? '1 Student Selected'
+                : `${selectedIds.length} Students Selected`;
+        } else {
+            selectedCountText.style.display = 'none';
+            selectedCountText.innerText = '';
+        }
+    }
+}
+
+// Event delegation — works even for rows injected later (reset fetch)
+document.addEventListener('change', function (e) {
+
+    if (e.target.classList.contains('row-checkbox')) {
+        updateSelectionUI();
+    }
+
+    if (e.target.id === 'selectAllCheckbox') {
+        getRowCheckboxes().forEach(cb => { cb.checked = e.target.checked; });
+        updateSelectionUI();
     }
 });
 
-// delete confirmation
-document.addEventListener("click", function (e) {
-    const link = e.target.closest(".delete-link");
-    if (!link) return;
+// EXPORT SELECTED ONLY
+if (exportExcelBtn) {
+    exportExcelBtn.addEventListener('click', function () {
 
-    e.preventDefault();
+        const selectedIds = getSelectedIds();
 
-    const url = link.dataset.url;
-    const name = link.dataset.name;
+        if (selectedIds.length === 0) {
+            alert("Please select at least one student to export.");
+            return;
+        }
 
-    if (confirm(`Delete student "${name}"? This action cannot be undone.`)) {
-        window.location.href = url;
-    }
+        const baseQuery = exportExcelBtn.dataset.baseQuery || '';
+        const params = new URLSearchParams(baseQuery);
+        params.set('format', 'excel');
+        params.set('ids', selectedIds.join(','));
+
+        window.location.href = '?' + params.toString();
+    });
+}
+
+updateSelectionUI();
+
+function toggleKebabMenu(event, btn) {
+    event.stopPropagation();
+    const menu = btn.nextElementSibling;
+
+    document.querySelectorAll('.kebab-menu.show').forEach(m => {
+        if (m !== menu) m.classList.remove('show');
+    });
+
+    menu.classList.toggle('show');
+}
+
+// outside click pannina menu close aagum
+document.addEventListener('click', function () {
+    document.querySelectorAll('.kebab-menu.show').forEach(m => m.classList.remove('show'));
 });
+
+function confirmDelete(el) {
+    const deleteUrl = el.dataset.deleteUrl;
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This student will be deleted permanently!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = deleteUrl;
+        }
+    });
+}

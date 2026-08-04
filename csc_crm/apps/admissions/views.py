@@ -814,7 +814,16 @@ def search_students(request):
             cell.fill = header_fill
             cell.alignment = Alignment(horizontal="center")
 
-        for student in filtered_students:
+        # ============ BULK SELECTION EXPORT ============
+        ids_param = request.GET.get('ids')
+
+        if ids_param:
+            selected_ids = [i for i in ids_param.split(',') if i.strip().isdigit()]
+            export_students = filtered_students.filter(id__in=selected_ids)
+        else:
+            export_students = filtered_students
+
+        for student in export_students:
             for admission in student.admissions.all():
                 enrollment = getattr(admission, 'enrollment', None)
 

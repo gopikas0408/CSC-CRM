@@ -382,16 +382,7 @@ a {
     font-weight: 600;
 }
 
-.custom-swal {
-    border-radius: 12px;
-    box-shadow: -5px 0 0 0 #d97706;
-}
 
-.custom-swal button:hover {
-    background-color: rgb(255, 202, 43);
-    color: rgb(30, 42, 120);
-    box-shadow: 0px 4px 10px rgb(255, 202, 43);
-}
 
 @media (max-width: 550px) {
     body {
@@ -454,11 +445,12 @@ a {
     position: absolute;
     right: 0;
     top: 100%;
-    background: white;
+    background: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    min-width: 130px;
-    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 140px;
+    z-index: 100;
     overflow: hidden;
 }
 
@@ -466,24 +458,20 @@ a {
     display: block;
 }
 
-.kebab-menu a {
+.kebab-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 14px;
-    font-size: 13.5px;
+    padding: 10px 14px;
     color: #333;
     text-decoration: none;
+    font-size: 14px;
 }
 
-.kebab-menu a:hover {
-    background: #f3f4f6;
+.kebab-item:hover {
+    background: #f5f5f5;
 }
 
-.kebab-menu a.delete-link {
-    color: #dc2626;
-}
-
-.kebab-menu a.delete-link:hover {
-    background: #fee2e2;
+.kebab-item.delete-item {
+    color: #d9534f;
 }
